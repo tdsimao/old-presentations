@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);   
       @import url(//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
       body { font-family: 'Droid Serif'; }
@@ -18,9 +18,14 @@
       body {
         font-family: 'Droid Serif';
       }
-      h1, h2, h3 {
+      h1 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: 400;
+        margin-bottom: 0;
+      }
+      h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 200;
         margin-bottom: 0;
       }
       .remark-slide-content h1 { font-size: 3em; }
@@ -124,6 +129,18 @@
         padding-top: 1em;
       }
 
+      .left-vs {
+        width: 45%;
+        height: 92%;
+        float: left;
+        padding-top: 1em;
+      }
+      .right-vs {
+        width: 45%;
+        height: 92%;
+        float: right;
+        padding-top: 1em;
+      }
 
     </style>
   </head>
@@ -173,8 +190,8 @@ parcialmente observável.
 
 ]
 ???
-Descrever que os planejadores clássicos lidam com ambiente
-parcialmente observável.
+Descrever que os planejadores conformante lidam com ambientes
+parcialmente observáveis.
 
 ---
 # Introdução
@@ -194,14 +211,26 @@ parcialmente observável.
 Descrever que os planejadores clássicos lidam com ambiente
 parcialmente observável.
 
----
-
-
-
 ???
 Descrever que o problema Conformante trabalha sobre um estado de 
 crenças o que torna o mesmo muito difícil 
 
+---
+# Introdução
+.left-vs[
+## Planejamento Clássico
+- possui __um único__ estado inicial
+- realiza a busca em um espaço de estados
+
+Imagem espaço de estados
+]
+.right-vs[
+## Planejamento Conformante
+- possui um conjunto de estados iniciais
+- realiza a busca em um espaço de crenças
+
+Imagem espaço de crenças
+]
 
 
     </textarea>
