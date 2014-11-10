@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{beamer}
+\mode<presentation>
+{
+  \usetheme{CambridgeUS}      % Rochester
+  \usecolortheme{beaver} % orchid
+  \usefonttheme{structurebold}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    %\insertframenumber/\inserttotalframenumber
+}
+
+\usepackage[brazil]{babel} 
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{multicol}
+\setcounter{tocdepth}{1}
+\setlength{\columnsep}{1cm}
+
+
+
+\input{tex/commands}
+\sloppy
+\input{tex/title}
+
+
+\begin{document}
+
+
+% \AtBeginSection[]{
+%     \begin{frame}
+%     \frametitle{Sumario}
+%     \tableofcontents[currentsection]    
+%     \end{frame}
+% }
+
+
+
+\input{tex/traducoes}
+
+\input{tex/references}
+
+\end{document}
