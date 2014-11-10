@@ -23,4 +23,5 @@
 *.out
 *.synctex.gz
 *.pdf
-
+*.kilepr
+*.backup
