@@ -29,7 +29,7 @@
         Criar um plano de ações para atingir as metas a partir de um estado 
 inicial conhecido \cite{Ghallab:2004}. \\
         \begin{center}
-            $P = \langle S, A, s_0, G \rangle$
+            $P = \langle S, s_0, S_G, A, f \rangle$
         \end{center}
     \end{block}
     
@@ -72,13 +72,13 @@ inicial conhecido \cite{Ghallab:2004}. \\
     \pause
     \begin{block}{Problema de planejamento clássico}
         \begin{center}
-            $P = \langle S, A, s_0, G \rangle$
+            $P = \langle S, s_0, S_G, A, f \rangle$
         \end{center}
     \end{block}
     
     \begin{block}{Problema de planejamento conformante}
         \begin{center}
-            $P = \langle S, A, I, G \rangle$
+            $P = \langle S, S_0, S_G, A, f \rangle$
         \end{center}
     \end{block}
 \end{frame}
@@ -90,65 +90,82 @@ inicial conhecido \cite{Ghallab:2004}. \\
 %\subsection{Definição}
 
 \begin{frame}{Definição}
-\begin{block}{Planejamento Conformante}
-{ \small Planejamento com informação incompleta e \textbf{sem sensoreamento}. Em 
-que uma meta deve ser atingida apesar da incerteza no estado inicial.}
-\end{block}
+    \begin{block}{Planejamento Conformante}
+    {  Planejamento com informação incompleta e \textbf{sem sensoreamento}. Em 
+    que uma meta deve ser atingida apesar da incerteza no estado inicial.}
+    \end{block}
 
-Uma solução para o problema de planejamento conformante é uma sequencia de ações 
-que mapeia todos os possíveis estados iniciais em algum estado meta. \\
+    { \small Uma solução para o problema de planejamento conformante é uma sequência de ações 
+    que mapeia todos os possíveis estados iniciais em algum estado meta.} \\
+    \pause
+    \begin{block}{ \alert{\bf Desafios}}
+        \begin{itemize}
+         \item representar crenças
+         \item encontrar heurísticas eficientes para o \textbf{espaço de crenças}
+        \end{itemize}
+    
+    \end{block}
 
 \end{frame}
 
 \begin{frame}{Espaço de busca}
     \begin{block}{Estados de crença}
-    { \small Quando o mundo é parcialmente observável, o estado de crença 
+    { Quando o mundo é parcialmente observável, o estado de crenças 
 representa o conjunto de possíveis estados onde o agente pode se encontrar. } \\
     \end{block}
-    \begin{itemize}
-    \item O tamanho do espaço de crença contém todas as possíveis combinações de 
-estados físicos.
-    Se o problema \textit{P} tiver \textit{N} estados podemos ter 
-$2^{\textit{N}}$ estados no total.\\
-    \item Para $N$ grande, é difícil manter todos os estados de crença.
-\end{itemize}
+    
+    \begin{block}{Tamanho}
+        \begin{itemize}
+        \item O espaço de crença é composto de todas as possíveis combinações de 
+    estados físicos.
+
+        \item Seja $n = |S|$ o número de estados do problema, há $2^{\textit{n}}$ possíveis 
+        estados de crença.\\
+        
+        \item NP-Completo
+        %\item Para $n$ grande, é difícil manter todos os estados de crença.
+        \end{itemize}
+    \end{block}
+   
 \end{frame}
 
-\begin{frame}{Clássico vs Conformante}
+\begin{frame}{Espaço de busca (Clássico vs Conformante)}
 
     \begin{multicols}{2}
         \centering
+    
         Espaço de Estados:
-        \includegraphics[scale=0.25]{images/space_of_states.png}
+        \includegraphics[scale=0.2]{images/space_of_states.png}
     \columnbreak
-        Espaço de Crenças Válido:
-        \includegraphics[scale=0.25]{images/belief_space.png}
+    
+        Espaço de Crenças Reduzido:
+        \includegraphics[scale=0.28]{images/belief_space.png}
     \end{multicols}
     
 \end{frame}
 
 
-\subsection{Complexidade}
-\begin{frame}{Planejamento conformante}
-\begin{itemize}
- \item O planejamento conformante é um problema de busca em espaço de crenças em 
-lugar de espaço de estados.
- \item O espaço de crenças pode chegar a ser de tamanho exponencial no numero de 
-estados. 
- \item O planejamento clássico é NP-Completo, mas o planejamento conformante é 
-mais difícil
-\end{itemize}
-\end{frame}
+% \subsection{Complexidade}
+% \begin{frame}{Planejamento conformante}
+% \begin{itemize}
+%  \item O planejamento conformante é um problema de busca em espaço de crenças em 
+% lugar de espaço de estados.
+%  \item O espaço de crenças pode chegar a ser de tamanho exponencial no numero de 
+% estados. 
+%  \item O planejamento clássico é NP-Completo, mas o planejamento conformante é 
+% mais difícil
+% \end{itemize}
+% \end{frame}
+% 
+% \begin{frame}{Planejamento conformante}
+% \begin{figure}
+% %\includegraphics[scale=0.45]{beliefSpace.png}
+% \end{figure}
+% 
+% \end{frame}
 
-\begin{frame}{Planejamento conformante}
-\begin{figure}
-%\includegraphics[scale=0.45]{beliefSpace.png}
-\end{figure}
 
-\end{frame}
-
-\subsection{Modelo}
-\begin{frame}{Planejamento Conformante}
+\begin{frame}{Modelo}
 Formalmente o planejamento conformante pode ser caracterizado por uma tupla 
 $S=\langle S, S_0, S_G, A, f \rangle$, sendo:
 \begin{itemize}
@@ -164,8 +181,8 @@ são obtidos aplicando a ação $a \in A(s)$ em s.
 \end{itemize}
 \end{frame}
 
-\subsection{Problema}
-\begin{frame}{Planejamento Conformante}
+
+\begin{frame}{Sintaxe}
 Um problema de planejamento é a seguinte tupla: $P=\langle F, I, O, G\rangle$, 
 onde:
 \begin{itemize}
@@ -181,7 +198,7 @@ não-determinístico).
 \end{frame}
 
 
-\begin{frame}{Planejamento Conformante}
+\begin{frame}{Semântica}
 Um problema de planejamento conformante define um modelo conformante $S(P) = 
 \langle S, S_0, S_G, A, F\rangle$:
 \begin{itemize}
@@ -195,13 +212,20 @@ os estados sucessores que seguem a ação $a$, no estado $s$.
 Um plano conformante para $P$, é um plano conformante para $S(P)$.
 \end{frame}
 
-\section{Tradução K0}
 
+\section{Tradução $K_0$}
 
-\begin{frame}{Traduções para planejamento Conformante}
+\begin{frame}{Proposta}
     \begin{itemize}
-    \item 
-    
+    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$
+    \item Utilizar um planejador clássico para resolver o problema
+    \end{itemize}  
+\end{frame}
+
+\begin{frame}{Definição do problema }
+    \begin{itemize}
+    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$
+    \item Utilizar um planejador clássico para resolver o problema
     \end{itemize}  
 \end{frame}
 
@@ -307,13 +331,14 @@ On_{2,6}/ t_4 \rbrace$
 \subsection{Outros Relaxamentos}
 \begin{frame}
     \begin{itemize}
-        \item
+        \item Observação parcial do ambiente -> Planejamento Contingente
+        \item Modelo de transação estocástico -> Planejamento Probabilístico
     \end{itemize}
 \end{frame} 
 
 \subsection{Conclusão}
 \begin{frame}
     \begin{itemize}
-        \item 
+        \item O 
     \end{itemize}
 \end{frame} 
