@@ -33,19 +33,24 @@ inicial conhecido \cite{Ghallab:2004}. \\
         \end{center}
     \end{block}
     
-    %Exemplo
-    \begin{multicols}{2}
-        \centering
-        %\includegraphics[scale=0.45]{../images/planejamento.png}\\
-    \columnbreak
-        \begin{itemize}
-        \item Ações: direita, esquerda, cima, baixo.
-        
-        \item Plano solução: (move1, load, move2).
-        \end{itemize} 
-    \end{multicols}
-    
 \end{frame}
+\begin{frame}{Exemplo}
+    
+    \begin{align*}
+            F  \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
+            A  \quad  & D: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
+                      & E: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
+                      & A: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
+           s_0 \quad  & \{ In(A), Dirt(A), Dirt(B)  \} \\
+           G   \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+    \end{align*}
+    
+    $\pi = (A,D,A)$
+    
+    $\lnot Dirt(A)$
+\end{frame}
+
+
 
 \begin{frame}{Suposições Restritivas \footnote{\cite{Ghallab:2004}}}
     \begin{enumerate}
@@ -134,7 +139,7 @@ representa o conjunto de possíveis estados onde o agente pode se encontrar. } \
     \begin{multicols}{2}
         \centering
     
-        Espaço de Estados:
+        Espaço de Estados: \footnote{\cite{AIMA2013}}
         \includegraphics[scale=0.2]{images/space_of_states.png}
     \columnbreak
     
@@ -183,12 +188,12 @@ são obtidos aplicando a ação $a \in A(s)$ em s.
 
 
 \begin{frame}{Sintaxe}
-Um problema de planejamento é a seguinte tupla: $P=\langle F, I, O, G\rangle$, 
+Um problema de planejamento é definido pela seguinte tupla: $P=\langle F, I, O, G\rangle$, 
 onde:
 \begin{itemize}
  \item $F$ é o conjunto de proposições do problema.
  \item $I$ é o conjunto de cláusulas sobre $F$ que definem a situação inicial.
- \item $A$ é o conjunto das ações. Cada ação $a$, tem uma precondição $Pre(a)$ 
+ \item $O$ é o conjunto das ações. Cada ação $a$, tem uma precondição $Pre(a)$ 
 $\subseteq F$, e um conjunto de efeitos condicionais: $C\rightarrow E_1 \mid ... 
 \mid E_n$, sendo $C\subseteq F$ e $E_i \subseteq F$. (Se $n > 1$ é 
 não-determinístico). 
@@ -199,18 +204,32 @@ não-determinístico).
 
 
 \begin{frame}{Semântica}
-Um problema de planejamento conformante define um modelo conformante $S(P) = 
-\langle S, S_0, S_G, A, F\rangle$:
-\begin{itemize}
-\item $S$ é o conjunto de possíveis valores das proposições em $F$.
-\item $S_0$ e $S_G$ é o conjunto de possíveis valores que satisfazem $I$ e $G$.
-\item $O(s)$ é o conjunto de operadores, as precondições dos quais são 
-verdadeiras em $s$.
-\item $f(a,s)$ é a função de transição não-determinística que resulta de obter 
-os estados sucessores que seguem a ação $a$, no estado $s$.
-\end{itemize}
-Um plano conformante para $P$, é um plano conformante para $S(P)$.
+    Um problema de planejamento conformante define um modelo de estados $S(P) = \langle S, S_0, S_G, A, F\rangle$:
+    \begin{itemize}
+        \item $S$ é o conjunto de possíveis valores das proposições em $F$.
+        \item $S_0$ e $S_G$ é o conjunto de possíveis valores que satisfazem $I$ e $G$.
+        \item $O(s)$ é o conjunto de operadores, as precondições dos quais são 
+            verdadeiras em $s$.
+        \item $f(a,s)$ é a função de transição não-determinística que resulta de obter 
+            os estados sucessores que seguem a ação $a$, no estado $s$.
+    \end{itemize}
+    Um plano conformante para $P$, é um plano conformante para $S(P)$.
 \end{frame}
+
+
+
+\begin{frame}{Exemplo}
+    Aspirador com incerteza na posição
+    \begin{itemize}
+        \item $F = \{A,L_A,L_B\}$.
+        \item $I $ te 
+        \item $O $ te
+        \item $G $ e
+    \end{itemize}
+
+\end{frame}
+
+
 
 
 \section{Tradução $K_0$}
@@ -222,11 +241,37 @@ Um plano conformante para $P$, é um plano conformante para $S(P)$.
     \end{itemize}  
 \end{frame}
 
-\begin{frame}{Definição do problema }
+\begin{frame}{Definição do problema traduzido}
+
+    Dado um problema de planejamento conformante:\\
+    $P=\langle F, I, O, G\rangle$,
+    
+    podemos definir um problema clássico equivalente:\\
+    $K_0(P)=\langle F', I', O', G'\rangle$
     \begin{itemize}
-    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$
-    \item Utilizar um planejador clássico para resolver o problema
+        \item $F' = \{ KL, K \lnot L | L \in F \}$
+        \item $I' = \{ KL | L \in I \}$
+        \item $G' = \{ KL | L \in G \}$
+%         \item $O' = O$, substituindo $L$ por $KL$ e para cada efeito condicional substui-se
+        $C \rightarrow L$ por $KC \rightarrow KL$ e $\lnot K \lnot C \rightarrow \lnot K \lnot C$. 
     \end{itemize}  
+\end{frame}
+
+
+
+\begin{frame}{Exemplo}
+    
+\end{frame}
+
+\begin{frame}{Características}
+    \begin{block}{CORRETO}
+        Todo plano que resolve $K_0(P)$ resolve $P$
+    \end{block}
+    \begin{block}{Não é COMPLETO}
+        Existem problemas conformantes com solução que ele não encontra
+    \end{block}
+    
+    
 \end{frame}
 
 \section{Tradução $K_{T,M}$}
@@ -326,15 +371,6 @@ On_{2,6}/ t_4 \rbrace$
     \end{itemize}
 \end{frame}
 
-
-
-\subsection{Outros Relaxamentos}
-\begin{frame}
-    \begin{itemize}
-        \item Observação parcial do ambiente -> Planejamento Contingente
-        \item Modelo de transação estocástico -> Planejamento Probabilístico
-    \end{itemize}
-\end{frame} 
 
 \subsection{Conclusão}
 \begin{frame}
