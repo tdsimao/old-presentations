@@ -13,11 +13,14 @@
     \end{block}
     \pause
     \begin{block}{Solução}
-        Planejadores conformantes
+        Planejadores conformantes\\
+    \pause
+        \alert{Desafio:} lidar com estados de crença e encontrar heurísticas eficientes
     \end{block}
     \pause
     \begin{block}{Nova abordagem}
-        \[ \text{Traduções} + \text{Planejador Clássico} \]
+    \centering
+        Traduções+ Planejador Clássico \footnote{\cite{Palacios:2009}}
     \end{block}
 
 \end{frame}
@@ -34,20 +37,27 @@ inicial conhecido \cite{Ghallab:2004}. \\
     \end{block}
     
 \end{frame}
+
 \begin{frame}{Exemplo}
+     \begin{block}{Problema}
+        \begin{align*}
+                F = \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
+                A = \quad  & R: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
+                           & L: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
+                           & S: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
+              s_0 = \quad  & \{ In(A), Dirt(A), Dirt(B)  \} \\
+                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+        \end{align*}
+    \end{block}
     
-    \begin{align*}
-            F  \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
-            A  \quad  & D: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
-                      & E: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
-                      & A: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
-           s_0 \quad  & \{ In(A), Dirt(A), Dirt(B)  \} \\
-           G   \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
-    \end{align*}
+        \begin{multicols}{2}
+            \centering
+             Plano: $\pi = (S,R,S)$\\
+        \columnbreak
+            %teste
+            \includegraphics[scale=0.18]{images/vaccum_cleaner.png}
+        \end{multicols}
     
-    $\pi = (A,D,A)$
-    
-    $\lnot Dirt(A)$
 \end{frame}
 
 
@@ -218,16 +228,30 @@ não-determinístico).
 
 
 
-\begin{frame}{Exemplo}
-    Aspirador com incerteza na posição
-    \begin{itemize}
-        \item $F = \{A,L_A,L_B\}$.
-        \item $I $ te 
-        \item $O $ te
-        \item $G $ e
-    \end{itemize}
 
+\begin{frame}{Exemplo}
+     \begin{block}{Problema}
+        \begin{align*}
+                F = \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
+                A = \quad  & R: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
+                           & L: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
+                           & S: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
+                I = \quad  & \{ In(A)\} \\
+                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+        \end{align*}
+    \end{block}
+    
+        \begin{multicols}{2}
+            \centering
+             Plano: \\$\pi = (S,R,S)$\\
+        \columnbreak
+                %teste
+            \includegraphics[scale=0.13 ]{images/belief_state0.png}
+        
+        \end{multicols}
+    
 \end{frame}
+
 
 
 
@@ -237,29 +261,78 @@ não-determinístico).
 \begin{frame}{Proposta}
     \begin{itemize}
     \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$
+        \begin{itemize}
+            \item $K$ indica que a variável $L$ é conhecida 
+            \item $\lnot KL$ não sabemos o valor de $L$
+        \end{itemize}  
     \item Utilizar um planejador clássico para resolver o problema
     \end{itemize}  
 \end{frame}
 
-\begin{frame}{Definição do problema traduzido}
+\begin{frame}{Definição da Tradução}
 
-    Dado um problema de planejamento conformante:\\
-    $P=\langle F, I, O, G\rangle$,
+    Dado um problema de planejamento conformante\\
+    \[P=\langle F, I, O, G\rangle,\]
     
     podemos definir um problema clássico equivalente:\\
-    $K_0(P)=\langle F', I', O', G'\rangle$
+    \[K_0(P)=\langle F', I', O', G'\rangle\]
     \begin{itemize}
         \item $F' = \{ KL, K \lnot L | L \in F \}$
         \item $I' = \{ KL | L \in I \}$
         \item $G' = \{ KL | L \in G \}$
-%         \item $O' = O$, substituindo $L$ por $KL$ e para cada efeito condicional substui-se
-        $C \rightarrow L$ por $KC \rightarrow KL$ e $\lnot K \lnot C \rightarrow \lnot K \lnot C$. 
+        \item $O' = O$, substituindo $L$ por $KL$ e para cada efeito condicional substui-se
+        $C \rightarrow L$ por $KC \rightarrow KL$ e $\lnot K \lnot C \rightarrow \lnot K \lnot L$. 
     \end{itemize}  
 \end{frame}
 
 
 
+
+
 \begin{frame}{Exemplo}
+     \begin{block}{Fluentes}
+        \begin{align*}
+                F = \quad  & \{ In(A),In(B),Dirt(A),Dirt(B) \}\\
+                F' = \quad  & \{ \K In(A),\K In(B),\K Dirt(A),\K Dirt(B),\\
+                            & \Kn In(A),\Kn In(B),\Kn Dirt(A),\Kn Dirt(B) \}\\
+        \end{align*}
+    \end{block}    
+\end{frame}
+\begin{frame}{Exemplo}
+     \begin{block}{Estado Inicial}
+        \begin{align*}
+                I = \quad  & \{ In(A)\} \\
+                I' = \quad  & \{ \K In(A) \} \\
+        \end{align*}
+    \end{block}    
+\end{frame}
+\begin{frame}{Exemplo}
+     \begin{block}{Meta}
+        \begin{align*}
+                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+                G' = \quad  & \{ \K \lnot Dirt(A),\K \lnot Dirt(B)  \} \\
+        \end{align*}
+    \end{block}    
+\end{frame}
+\begin{frame}{Exemplo}
+     \begin{block}{Operadores}
+        \begin{align*}
+                O  = \quad & R: \text{Prec} = \emptyset, Ef= \{& In(A) \rightarrow In(B),\lnot In(A) \} \\
+                O' = \quad & R: \text{Prec} = \emptyset, Ef= \{& \K In(A) \rightarrow \K In(B), \K \lnot In(A)  \\
+                          &                                    &\lnot \Kn In(A) \rightarrow \lnot \Kn In(B), \lnot \K In(A) \} \\
+        \end{align*}
+    \end{block}    
+\end{frame}
+
+\begin{frame}{Exemplo}
+    \begin{block}{Tradução}
+        \begin{align*}
+            \{ \K In(A)  \} & \overset{S}{\Rightarrow} \{ \K In(A), \Kn Dirt(A) \} \\
+                            & \overset{R}{\Rightarrow} \{ \K In(B), \Kn Dirt(A), \K \lnot In(A) \} \\
+                            & \overset{S}{\Rightarrow} \{ \K In(B), \Kn Dirt(A), \K \lnot In(A), \Kn Dirt(B) \} 
+        \end{align*}
+\end{block}
+    
     
 \end{frame}
 
@@ -267,7 +340,7 @@ não-determinístico).
     \begin{block}{CORRETO}
         Todo plano que resolve $K_0(P)$ resolve $P$
     \end{block}
-    \begin{block}{Não é COMPLETO}
+    \begin{block}{\alert{Não é COMPLETO}}
         Existem problemas conformantes com solução que ele não encontra
     \end{block}
     
@@ -276,51 +349,25 @@ não-determinístico).
 
 \section{Tradução $K_{T,M}$}
 
-
-\begin{frame}{Traduções para planejamento Conformante}
-\begin{itemize}
-\item O problema conformante $P$, é traduzido numa versão clássica do mesmo 
-problema: $K_{T,M}(P)$. 
-\item A tradução $K$ é a versão epistêmica do problema $P$, que significa que 
-raciocinaremos sobre o conhecimento que temos dos literais em $P$.
-\item O significado do \textit{operador} $K$ é indicar se a variável $L$ e 
-conhecida. Por exemplo $KL$ significa que sabemos que o valor de $L$ é verdade, 
-e $K \lnot L$ que sabemos que $L$ é falso.
-\item Similarmente para $\lnot KL$ não sabemos se o valor de $L$ é verdadeiro, e 
-$\lnot K \lnot L$ não sabemos se $L$ é falso. Assim eliminamos toda incerteza na 
-situação inicial em $K(P)$ %\cite{palacios2007conformant}.
-\end{itemize}  
-\end{frame}
-
-\subsection{Tags e Merges}
-\begin{frame}{Traduções para planejamento Conformante}
-\begin{itemize}
-\item $T$ e $M$ são dois parâmetros, o conjunto de \textit{tags} e o conjunto de 
-\textit{merges}. 
-\item Um \textit{tag} $t \in T$ é um conjunto de literais $L$ de $P$, do qual 
-não conhecemos o valor no estado inicial $I$. 
-\item A operação de \textit{merge} permite obter conhecimento sobre literais. 
-Cada operação de \textit{merge} é uma dupla $(R,L) \in M$ que contem o conjunto 
-de tags $R \subseteq T$, e o literal $L$ de $P$. 
-\item Uma operação de \textit{merge} é valida quando um dos \textit{tags} $t$ é 
-verdadeiro no estado inicial $I$. 
-\end{itemize}
-\begin{equation*}
-I \models \bigvee_{t \in R} t.
-\end{equation*}
-\end{frame}
-
-\begin{frame}{Traduções para planejamento Conformante}
-\begin{itemize}
-\item Os \textit{tags} são assunções sobre o estado inicial, um deles tem que 
-ser verdadeiro no estado inicial.
-\item A operação de \textit{merge} nos da o conhecimento sobre o valor do 
-literal $L$, quando tivermos o valor $L$ conhecido para todos os diferentes 
-\textit{tags}:
-\end{itemize}
-\begin{equation*}
-m_{R,L} : \bigwedge_{t \in R} KL/t \rightarrow KL.
-\end{equation*}
+\begin{frame}{Tags e Merges}
+     \begin{itemize}
+    \item $T$ e $M$ são dois parâmetros, o conjunto de \textit{tags} e o conjunto de \textit{merges}. 
+    \item Uma \textit{tag} $t \in T$ uma possível situação do estado inicial $I$, isto é
+        são suposições sobre o estado inicial, uma delas é o verdadeira no estado inicial.
+        \[
+            I \models \bigvee_{t \in R} t.
+        \]
+    
+    \item Para cada literal $L$ e cada tag $t$ temos:
+    \[KL/t \quad K \lnot L/t\]
+    
+    \item A operação de \textit{merge} nos da o conhecimento sobre o valor do 
+        literal $L$, quando tivermos o valor $L$ conhecido para todos os diferentes 
+        \textit{tags}:
+    \end{itemize}
+        \[
+            m_{L} : \bigwedge_{t \in I} KL/t \rightarrow KL.
+        \]
 \end{frame}
 
 \subsection{Tradução}
@@ -337,44 +384,66 @@ Para o problema $P=\langle F, O, I, G\rangle$ definimos a tradução $K_{T,M}(P)
 \rbrace$ 
 \end{itemize}
 \end{frame}
+% 
+% \subsection{Exemplos}
+% \begin{frame}{Exemplo}
+%     \begin{multicols}{2}
+%         \centering
+%         
+%         %\includegraphics[scale=0.2]{grid.jpg}\\
+%     \columnbreak
+%         \begin{itemize}
+%         \item $F = \lbrace On_{x,y} \rbrace$
+%         \item $I=\lbrace On_{1,5}, On_{1,6}, On_{2,5}, On_{2,6} \rbrace$
+%         \item $A=\lbrace moveRight(), moveLeft(),$ $moveUp(), moveDown() 
+% \rbrace$
+%         \item $G=\lbrace On_{6,1}\rbrace$.
+%         \end{itemize} 
+%     \end{multicols}
+% \end{frame}
+% 
+% \begin{frame}{Exemplo}
+%     A tradução do problema anterior $K_{T,M}(P) = \langle F', O', I', 
+% G'\rangle$:
+%     \begin{itemize}
+%     \item O conjunto $T$ de \textit{tags}, que incluiria os possíveis estados 
+% iniciais: 
+%     $t_1 = On_{1,5}, t_2 = On_{1,6}, t_3 = On_{2,5}, t_4 = On_{2,6}$.
+%     \item $F = \lbrace  K \lnot On_{1,1} / t_1, K \lnot On_{1,1} / t_2,$ 
+%     $ K \lnot On_{1,1} / t_3, K \lnot On_{1,1} / t_4, K \lnot On_{1,2} / t1,... 
+% \rbrace$
+%     \item $I=\lbrace K On_{1,5}/t_1, K On_{1,6}/t_2, K On_{2,5}/ t_3, K 
+% On_{2,6}/ t_4 \rbrace$
+%     \item $G=\lbrace K On_{6,1}\rbrace$.
+%     \end{itemize}
+% \end{frame}
 
-\subsection{Exemplos}
-\begin{frame}{Exemplo}
-    \begin{multicols}{2}
-        \centering
-        
-        %\includegraphics[scale=0.2]{grid.jpg}\\
-    \columnbreak
-        \begin{itemize}
-        \item $F = \lbrace On_{x,y} \rbrace$
-        \item $I=\lbrace On_{1,5}, On_{1,6}, On_{2,5}, On_{2,6} \rbrace$
-        \item $A=\lbrace moveRight(), moveLeft(),$ $moveUp(), moveDown() 
-\rbrace$
-        \item $G=\lbrace On_{6,1}\rbrace$.
-        \end{itemize} 
-    \end{multicols}
+
+\begin{frame}{Características}
+    \begin{block}{CORRETO}
+        Todo plano que resolve $K_{T,M}(P)$ resolve $P$
+    \end{block}
+    \begin{block}{COMPLETO}
+        Sempre encontra a solução
+    \end{block}
+    
+    
 \end{frame}
 
-\begin{frame}{Exemplo}
-    A tradução do problema anterior $K_{T,M}(P) = \langle F', O', I', 
-G'\rangle$:
-    \begin{itemize}
-    \item O conjunto $T$ de \textit{tags}, que incluiria os possíveis estados 
-iniciais: 
-    $t_1 = On_{1,5}, t_2 = On_{1,6}, t_3 = On_{2,5}, t_4 = On_{2,6}$.
-    \item $F = \lbrace  K \lnot On_{1,1} / t_1, K \lnot On_{1,1} / t_2,$ 
-    $ K \lnot On_{1,1} / t_3, K \lnot On_{1,1} / t_4, K \lnot On_{1,2} / t1,... 
-\rbrace$
-    \item $I=\lbrace K On_{1,5}/t_1, K On_{1,6}/t_2, K On_{2,5}/ t_3, K 
-On_{2,6}/ t_4 \rbrace$
-    \item $G=\lbrace K On_{6,1}\rbrace$.
-    \end{itemize}
-\end{frame}
-
-
-\subsection{Conclusão}
+\section{Conclusão}
 \begin{frame}
     \begin{itemize}
-        \item O 
+        \item As traduções são um meio eficiente de abordar problemas com incerteza na situação inicial e sem observação
+        \item Essa abordagem toma proveito dos melhores planejadores clássicos para aumentar sua eficiência.
+        \item Lida implicitamente com os problemas:
+        \begin{itemize}
+            \item Manter estado de crenças
+            \item Uso de heurísticas
+        \end{itemize}
+        
+        \item Problema
+        \begin{itemize}
+            \item \alert{Tradução aumenta exponencialmente o tamanho do problema}  
+        \end{itemize}
     \end{itemize}
 \end{frame} 
