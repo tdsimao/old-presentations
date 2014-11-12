@@ -203,29 +203,30 @@ onde:
 \begin{itemize}
  \item $F$ é o conjunto de proposições do problema.
  \item $I$ é o conjunto de cláusulas sobre $F$ que definem a situação inicial.
- \item $O$ é o conjunto das ações. Cada ação $a$, tem uma precondição $Pre(a)$ 
-$\subseteq F$, e um conjunto de efeitos condicionais: $C\rightarrow E_1 \mid ... 
-\mid E_n$, sendo $C\subseteq F$ e $E_i \subseteq F$. (Se $n > 1$ é 
-não-determinístico). 
+ \item $O$ é o conjunto das ações. Cada ação $a$, tem:
+    \begin{itemize}
+       \item um conjunto de precondições $Pre(a) \subseteq F$
+       \item um conjunto de efeitos condicionais na forma $C\rightarrow E$ onde $C,E \in F$
+    \end{itemize}
  \item $G$ é o sub-conjunto de $F$ que define o estado meta. 
 \end{itemize}
 
 \end{frame}
 
 
-\begin{frame}{Semântica}
-    Um problema de planejamento conformante define um modelo de estados $S(P) = \langle S, S_0, S_G, A, F\rangle$:
-    \begin{itemize}
-        \item $S$ é o conjunto de possíveis valores das proposições em $F$.
-        \item $S_0$ e $S_G$ é o conjunto de possíveis valores que satisfazem $I$ e $G$.
-        \item $O(s)$ é o conjunto de operadores, as precondições dos quais são 
-            verdadeiras em $s$.
-        \item $f(a,s)$ é a função de transição não-determinística que resulta de obter 
-            os estados sucessores que seguem a ação $a$, no estado $s$.
-    \end{itemize}
-    Um plano conformante para $P$, é um plano conformante para $S(P)$.
-\end{frame}
-
+% \begin{frame}{Semântica}
+%     Um problema de planejamento conformante define um modelo de estados $S(P) = \langle S, S_0, S_G, A, F\rangle$:
+%     \begin{itemize}
+%         \item $S$ é o conjunto de possíveis valores das proposições em $F$.
+%         \item $S_0$ e $S_G$ é o conjunto de possíveis valores que satisfazem $I$ e $G$.
+%         \item $O(s)$ é o conjunto de operadores, as precondições dos quais são 
+%             verdadeiras em $s$.
+%         \item $f(a,s)$ é a função de transição não-determinística que resulta de obter 
+%             os estados sucessores que seguem a ação $a$, no estado $s$.
+%     \end{itemize}
+%     Um plano conformante para $P$, é um plano conformante para $S(P)$.
+% \end{frame}
+% 
 
 
 
@@ -280,44 +281,45 @@ não-determinístico).
         \item $F' = \{ KL, K \lnot L | L \in F \}$
         \item $I' = \{ KL | L \in I \}$
         \item $G' = \{ KL | L \in G \}$
-        \item $O' = O$, substituindo $L$ por $KL$ e para cada efeito condicional substui-se
-        $C \rightarrow L$ por $KC \rightarrow KL$ e $\lnot K \lnot C \rightarrow \lnot K \lnot L$. 
+        \item $O' = O$, substituindo $L$ por $KL$ e para cada efeito condicional substui-se 
+        \begin{align*}C \rightarrow L \text{ por } & KC \rightarrow KL &\text{Regra de Suporte} \\ 
+                                        \text{ e } & \lnot K \lnot C \rightarrow \lnot K \lnot L& \text{Regra de Cancelamento}
+        \end{align*}
     \end{itemize}  
 \end{frame}
-
-
-
-
 
 \begin{frame}{Exemplo}
      \begin{block}{Fluentes}
         \begin{align*}
-                F = \quad  & \{ In(A),In(B),Dirt(A),Dirt(B) \}\\
+                F = \quad  & \{ In(A),In(B),Dirt(A),Dirt(B) \} \\ \intertext{}
                 F' = \quad  & \{ \K In(A),\K In(B),\K Dirt(A),\K Dirt(B),\\
                             & \Kn In(A),\Kn In(B),\Kn Dirt(A),\Kn Dirt(B) \}\\
         \end{align*}
     \end{block}    
 \end{frame}
+
 \begin{frame}{Exemplo}
      \begin{block}{Estado Inicial}
         \begin{align*}
-                I = \quad  & \{ In(A)\} \\
+                I = \quad  & \{ In(A)\} \\\intertext{}
                 I' = \quad  & \{ \K In(A) \} \\
         \end{align*}
     \end{block}    
 \end{frame}
+
 \begin{frame}{Exemplo}
      \begin{block}{Meta}
         \begin{align*}
-                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\\intertext{}
                 G' = \quad  & \{ \K \lnot Dirt(A),\K \lnot Dirt(B)  \} \\
         \end{align*}
     \end{block}    
 \end{frame}
+
 \begin{frame}{Exemplo}
      \begin{block}{Operadores}
         \begin{align*}
-                O  = \quad & R: \text{Prec} = \emptyset, Ef= \{& In(A) \rightarrow In(B),\lnot In(A) \} \\
+                O  = \quad & R: \text{Prec} = \emptyset, Ef= \{& In(A) \rightarrow In(B),\lnot In(A) \} \\ \intertext{}
                 O' = \quad & R: \text{Prec} = \emptyset, Ef= \{& \K In(A) \rightarrow \K In(B), \K \lnot In(A)  \\
                           &                                    &\lnot \Kn In(A) \rightarrow \lnot \Kn In(B), \lnot \K In(A) \} \\
         \end{align*}
@@ -355,7 +357,7 @@ não-determinístico).
     \item Uma \textit{tag} $t \in T$ uma possível situação do estado inicial $I$, isto é
         são suposições sobre o estado inicial, uma delas é o verdadeira no estado inicial.
         \[
-            I \models \bigvee_{t \in R} t.
+            I \models \bigvee_{t \in I  } t.
         \]
     
     \item Para cada literal $L$ e cada tag $t$ temos:
