@@ -3,27 +3,27 @@
 \end{frame}
 
 
-\section{Introdução}
-\begin{frame}{Introdução}
-    
-    \begin{block}{Problema}
-        Ambiente parcialmente observável\\
-        \pause
-        Inviável uso de planejamento clássico
-    \end{block}
-    \pause
-    \begin{block}{Solução}
-        Planejadores conformantes\\
-    \pause
-        \alert{Desafio:} lidar com estados de crença e encontrar heurísticas eficientes
-    \end{block}
-    \pause
-    \begin{block}{Nova abordagem}
-    \centering
-        Traduções+ Planejador Clássico \footnote{\cite{Palacios:2009}}
-    \end{block}
-
-\end{frame}
+% \section{Introdução}
+% \begin{frame}{Introdução}
+%     
+%     \begin{block}{Problema}
+%         Ambiente parcialmente observável\\
+%         \pause
+%         Inviável uso de planejamento clássico
+%     \end{block}
+%     \pause
+%     \begin{block}{Solução}
+%         Planejadores conformantes\\
+%     \pause
+%         \alert{Desafio:} lidar com estados de crença e encontrar heurísticas eficientes
+%     \end{block}
+%     \pause
+%     \begin{block}{Nova abordagem}
+%     \centering
+%         Traduções+ Planejador Clássico \footnote{\cite{Palacios:2009}}
+%     \end{block}
+% 
+% \end{frame}
 
 
 \section{Planejamento clássico}
@@ -261,7 +261,7 @@ onde:
 
 \begin{frame}{Proposta}
     \begin{itemize}
-    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$
+    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$ \footnote{\cite{Palacios:2009}}
         \begin{itemize}
             \item $K$ indica que a variável $L$ é conhecida 
             \item $\lnot KL$ não sabemos o valor de $L$
