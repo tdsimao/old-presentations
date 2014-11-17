@@ -1,18 +1,16 @@
 \documentclass[11pt,a4paper]{beamer}
-\mode<presentation>
-{
-  \usetheme{CambridgeUS}      % Rochester
-  \usecolortheme{beaver} % orchid
-  \usefonttheme{structurebold}  % or try serif, structurebold, ...
-  \setbeamertemplate{navigation symbols}{}
-  \setbeamertemplate{caption}[numbered]
-} 
-
+ \mode<presentation>
+ {
+   \usetheme{default}      % default theme (clean)
+   \usecolortheme{rose}    % config colors
+   \setbeamertemplate{navigation symbols}{} %remove navigation symbols
+ } 
+%  add numbered slides
 \addtobeamertemplate{navigation symbols}{}{%
     \usebeamerfont{footline}%
     \usebeamercolor[fg]{footline}%
     \hspace{1em}%
-    %\insertframenumber/\inserttotalframenumber
+    \insertframenumber/\inserttotalframenumber
 }
 
 \usepackage[brazil]{babel} 

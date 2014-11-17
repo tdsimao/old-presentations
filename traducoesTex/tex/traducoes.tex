@@ -30,10 +30,10 @@
 \begin{frame}{Definição}
     \begin{block}{Problema de planejamento clássico}
         Criar um plano de ações para atingir as metas a partir de um estado 
-inicial conhecido \cite{Ghallab:2004}. \\
-        \begin{center}
-            $P = \langle S, s_0, S_G, A, f \rangle$
-        \end{center}
+        inicial conhecido \cite{Ghallab:2004}. \\
+        \[
+            P = \langle S, s_0, S_G, A, f \rangle
+        \]
     \end{block}
     
 \end{frame}
@@ -41,18 +41,18 @@ inicial conhecido \cite{Ghallab:2004}. \\
 \begin{frame}{Exemplo}
      \begin{block}{Problema}
         \begin{align*}
-                F = \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
+                F = \quad  & In(A),In(B),Clean(A),Clean(B) \\
                 A = \quad  & R: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
                            & L: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
-                           & S: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
-              s_0 = \quad  & \{ In(A), Dirt(A), Dirt(B)  \} \\
-                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+                           & C: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow Clean(A); In(B) \rightarrow Clean(B) \} \\
+              s_0 = \quad  & \{ In(A) \} \\
+                G = \quad  & \{ Clean(A),Clean(B)  \} \\
         \end{align*}
     \end{block}
     
         \begin{multicols}{2}
             \centering
-             Plano: $\pi = (S,R,S)$\\
+             Plano: $\pi = (C,R,C)$\\
         \columnbreak
             %teste
             \includegraphics[scale=0.18]{images/vaccum_cleaner.png}
@@ -65,7 +65,7 @@ inicial conhecido \cite{Ghallab:2004}. \\
 \begin{frame}{Suposições Restritivas \footnote{\cite{Ghallab:2004}}}
     \begin{enumerate}
         \item Espaço de estados finito 
-        \item Ambiente totalmente observável \label{A:1}
+        \item \textbf{Ambiente totalmente observável} \label{rest2}
         \item Função de transição determinística 
         \item Ambiente estático (sem agentes externos)
         \item Existem apenas metas de alcançabilidade 
@@ -77,7 +77,7 @@ inicial conhecido \cite{Ghallab:2004}. \\
 \end{frame}
 
 \begin{frame}{Extensão do problema}
-    \begin{block}{Relaxar a suposição \ref{A:1} Ambiente totalmente observável}
+    \begin{block}{Relaxar restrição \ref{rest2}: ambiente totalmente observável}
         Ambiente sem observação e incerteza no estado inicial
     \end{block}
     
@@ -181,35 +181,35 @@ representa o conjunto de possíveis estados onde o agente pode se encontrar. } \
 
 
 \begin{frame}{Modelo}
-Formalmente o planejamento conformante pode ser caracterizado por uma tupla 
-$S=\langle S, S_0, S_G, A, f \rangle$, sendo:
-\begin{itemize}
-\item $S$ é um espaço finito de estados,
-\item $S_0$ é um conjunto não vazio de possíveis estados iniciais $S_0\subseteq 
-S$,
-\item $S_G$ é um conjunto não vazio de estados meta $S_G \subseteq S$,
-\item $A$ é um conjunto de ações em que $A(s)$ denota o conjunto de ações 
-aplicáveis no estado $s \in S$ e
-\item $f$ é uma função de transição de estados não-determinística, em que 
-$f(a,s)$ indica o conjunto não-vazio de possíveis estados sucessores de $s$, que 
-são obtidos aplicando a ação $a \in A(s)$ em s.
-\end{itemize}
+    Formalmente o planejamento conformante pode ser caracterizado por uma tupla 
+    $P(S) =\langle S, S_0, S_G, A, f \rangle$, sendo:
+    \begin{itemize}
+        \item $S$ é um espaço finito de estados,
+        \item \textbf{ $S_0$ é um conjunto não vazio de possíveis estados iniciais $S_0\subseteq 
+        S$,}
+        \item $S_G$ é um conjunto não vazio de estados meta $S_G \subseteq S$,
+        \item $A$ é um conjunto de ações em que $A(s)$ denota o conjunto de ações 
+        aplicáveis no estado $s \in S$ e
+        \item $f$ é uma função de transição de estados não-determinística, em que 
+        $f(a,s)$ indica o conjunto não-vazio de possíveis estados sucessores de $s$, que 
+        são obtidos aplicando a ação $a \in A(s)$ em s.
+    \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Sintaxe}
-Um problema de planejamento é definido pela seguinte tupla: $P=\langle F, I, O, G\rangle$, 
-onde:
-\begin{itemize}
- \item $F$ é o conjunto de proposições do problema.
- \item $I$ é o conjunto de cláusulas sobre $F$ que definem a situação inicial.
- \item $O$ é o conjunto das ações. Cada ação $a$, tem:
+    Um problema de planejamento é definido pela seguinte tupla $P=\langle F, I, O, G\rangle$, 
+    onde:
     \begin{itemize}
-       \item um conjunto de precondições $Pre(a) \subseteq F$
-       \item um conjunto de efeitos condicionais na forma $C\rightarrow E$ onde $C,E \in F$
+    \item $F$ é o conjunto de proposições do problema.
+    \item $I$ é o conjunto de cláusulas sobre $F$ que definem a situação inicial.
+    \item $O$ é o conjunto das ações. Cada ação $a$, tem:
+        \begin{itemize}
+            \item um conjunto de precondições $Pre(a) \subseteq F$
+            \item um conjunto de efeitos condicionais na forma $C\rightarrow E$ onde $C,E \in F$
+        \end{itemize}
+    \item $G$ é o sub-conjunto de $F$ que define o estado meta. 
     \end{itemize}
- \item $G$ é o sub-conjunto de $F$ que define o estado meta. 
-\end{itemize}
 
 \end{frame}
 
@@ -233,18 +233,18 @@ onde:
 \begin{frame}{Exemplo}
      \begin{block}{Problema}
         \begin{align*}
-                F = \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
-                A = \quad  & R: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
-                           & L: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
-                           & S: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow \lnot Dirt(A); In(B) \rightarrow \lnot Dirt(B) \} \\
-                I = \quad  & \{ In(A)\} \\
-                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\
+            F = \quad  & In(A),In(B),Dirt(A),Dirt(B) \\
+            A = \quad  & R: \text{Prec} = \emptyset, Ef= \{ In(A) \rightarrow In(B),\lnot In(A) \} \\
+                       & L: \text{Prec} = \emptyset, Ef= \{ In(B) \rightarrow In(A),\lnot In(B) \} \\
+                       & C: \text{Prec} = \emptyset, Ef= \{ In(A)  \rightarrow Clean(A); In(B) \rightarrow Clean(B) \} \\
+            I = \quad  & \{ In(A)\} \\
+            G = \quad  & \{ Clean(A),Clean(B)  \} \\
         \end{align*}
     \end{block}
     
         \begin{multicols}{2}
             \centering
-             Plano: \\$\pi = (S,R,S)$\\
+             Plano: \\$\pi = (C,R,C)$\\
         \columnbreak
                 %teste
             \includegraphics[scale=0.13 ]{images/belief_state0.png}
@@ -259,9 +259,9 @@ onde:
 
 \section{Tradução $K_0$}
 
-\begin{frame}{Proposta}
+\begin{frame}{Proposta \footnote{\cite{Palacios:2009}}}
     \begin{itemize}
-    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$ \footnote{\cite{Palacios:2009}}
+    \item Substituir cada literal $L$ por $ KL$ ou $K \lnot L$ 
         \begin{itemize}
             \item $K$ indica que a variável $L$ é conhecida 
             \item $\lnot KL$ não sabemos o valor de $L$
@@ -291,9 +291,9 @@ onde:
 \begin{frame}{Exemplo}
      \begin{block}{Fluentes}
         \begin{align*}
-                F = \quad  & \{ In(A),In(B),Dirt(A),Dirt(B) \} \\ \intertext{}
-                F' = \quad  & \{ \K In(A),\K In(B),\K Dirt(A),\K Dirt(B),\\
-                            & \Kn In(A),\Kn In(B),\Kn Dirt(A),\Kn Dirt(B) \}\\
+                F = \quad  & \{ In(A),In(B),Clean(A),Clean(B) \} \\ \intertext{}
+                F' = \quad  & \{ \K In(A),\K In(B),\K Clean(A),\K Clean(B),\\
+                            & \Kn In(A),\Kn In(B),\Kn Clean(A),\Kn Clean(B) \}\\
         \end{align*}
     \end{block}    
 \end{frame}
@@ -310,8 +310,8 @@ onde:
 \begin{frame}{Exemplo}
      \begin{block}{Meta}
         \begin{align*}
-                G = \quad  & \{ \lnot Dirt(A),\lnot Dirt(B)  \} \\\intertext{}
-                G' = \quad  & \{ \K \lnot Dirt(A),\K \lnot Dirt(B)  \} \\
+                G = \quad  & \{ Clean(A),Clean(B)  \} \\\intertext{}
+                G' = \quad  & \{ \K Clean(A),\K Clean(B)  \} \\
         \end{align*}
     \end{block}    
 \end{frame}
@@ -329,9 +329,9 @@ onde:
 \begin{frame}{Exemplo}
     \begin{block}{Tradução}
         \begin{align*}
-            \{ \K In(A)  \} & \overset{S}{\Rightarrow} \{ \K In(A), \Kn Dirt(A) \} \\
-                            & \overset{R}{\Rightarrow} \{ \K In(B), \Kn Dirt(A), \K \lnot In(A) \} \\
-                            & \overset{S}{\Rightarrow} \{ \K In(B), \Kn Dirt(A), \K \lnot In(A), \Kn Dirt(B) \} 
+            \{ \K In(A)  \} & \overset{C}{\Rightarrow} \{ \K In(A), \K Clean(A) \} \\
+                            & \overset{R}{\Rightarrow} \{ \K In(B), \K Clean(A), \K \lnot In(A) \} \\
+                            & \overset{C}{\Rightarrow} \{ \K In(B), \K Clean(A), \K \lnot In(A), \K Clean(B) \} 
         \end{align*}
 \end{block}
     
@@ -339,12 +339,12 @@ onde:
 \end{frame}
 
 \begin{frame}{Características}
-    \begin{block}{CORRETO}
+    \begin{exampleblock}{Correto}
         Todo plano que resolve $K_0(P)$ resolve $P$
-    \end{block}
-    \begin{block}{\alert{Não é COMPLETO}}
+    \end{exampleblock}
+    \begin{alertblock}{Incompleto}
         Existem problemas conformantes com solução que ele não encontra
-    \end{block}
+    \end{alertblock}
     
     
 \end{frame}
@@ -375,7 +375,7 @@ onde:
 \subsection{Tradução}
 \begin{frame}{Traduções para planejamento Conformante}
 Para o problema $P=\langle F, O, I, G\rangle$ definimos a tradução $K_{T,M}(P) = 
-\langle F', O', I', G'\rangle$ como:
+\langle F', O', I', G'\rangle$ onde:
 \begin{itemize}
 \item $F' = \lbrace KL/t, K\lnot L/t \vert L \in F \quad e \quad t \in T 
 \rbrace$
@@ -422,30 +422,30 @@ Para o problema $P=\langle F, O, I, G\rangle$ definimos a tradução $K_{T,M}(P)
 
 
 \begin{frame}{Características}
-    \begin{block}{CORRETO}
+    \begin{exampleblock}{Correto}
         Todo plano que resolve $K_{T,M}(P)$ resolve $P$
-    \end{block}
-    \begin{block}{COMPLETO}
-        Sempre encontra a solução
-    \end{block}
+    \end{exampleblock}
+    \begin{exampleblock}{Completo}
+        Sempre encontra a solução se existir
+    \end{exampleblock}
     
     
 \end{frame}
 
 \section{Conclusão}
-\begin{frame}
-    \begin{itemize}
-        \item As traduções são um meio eficiente de abordar problemas com incerteza na situação inicial e sem observação
-        \item Essa abordagem toma proveito dos melhores planejadores clássicos para aumentar sua eficiência.
-        \item Lida implicitamente com os problemas:
+\begin{frame}{Conclusão}
+    \begin{exampleblock}{Vantagens}
         \begin{itemize}
-            \item Manter estado de crenças
-            \item Uso de heurísticas
+            \item As traduções são um meio eficiente de abordar problemas com incerteza na situação inicial e sem observação
+            \item Essa abordagem toma proveito dos melhores planejadores clássicos para aumentar sua eficiência.
+            \item Lida implicitamente com os problemas:
+            \begin{itemize}
+                \item Manter estado de crenças
+                \item Uso de heurísticas
+            \end{itemize}
         \end{itemize}
-        
-        \item Problema
-        \begin{itemize}
-            \item \alert{Tradução aumenta exponencialmente o tamanho do problema}  
-        \end{itemize}
-    \end{itemize}
+    \end{exampleblock}
+    \begin{alertblock}{Problema}
+        Tradução aumenta exponencialmente o tamanho do problema
+    \end{alertblock}
 \end{frame} 
